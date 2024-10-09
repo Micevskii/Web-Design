@@ -1,0 +1,96 @@
+{% extends 'base.html' %} {% load static %}{% load i18n %}
+{% block title %} | Блог {% endblock %}
+{% block content %}
+<div class="bcg">
+    <img src="{% static 'img/slide1.png' %}">
+    <div class="title-ctg row justify-content-center text-center" data-aos="fade-up" data-aos-delay="100">
+        <div class="col-xl-6 col-lg-8 animation">
+            <h2>{% trans "Блог" %}<span>.</span></h2>
+            <p>{% trans "Дознај повеќе за Гевгелија" %}</p>
+        </div>
+    </div>
+</div>
+<div class="container-fluid blog-categories mt-5 mb-5 animation">
+    <div class="container">
+        <div class="row">
+
+            {% if blog %}
+                {% for blog_page in blog %}
+                <div class="blog-col col-lg-4 mb-lg-0 mb-4  " >
+                    <div class="blog-overlay d-flex flex-column justify-content-end align-items-center" style="background-image: url({{blog_page.photo_main.url}}); background-size: cover; overflow:hidden">
+                        <div class="overlayb">  <a href="{% url 'listing' blog_page.id %}" class="link-overlay"></a>
+                            <div class="date">
+                            <h6>{{ blog_page.list_date|date:"M" }}</h6>
+                            <h1>{{ blog_page.list_date.day }}</h1>
+                            </div>
+                        </div>
+    
+                    </div>
+                    <div class="blog-content">
+                        <a href="{% url 'listing' blog_page.id %}"></a>
+                        <p class="adress">{{ blog_page.category }}</p>
+                        <h1>{{ blog_page.title }}</h1>
+                    </div>
+                </div>    
+                {% endfor %}
+    
+            {% else %}
+                <div class="col md-12">
+                    <p>{% trans "Нема објави" %}</p>
+                </div>
+            {% endif %}
+</div>
+</div>
+</div>
+            <div class="row">
+  <div class="col-md-12">
+    {% if blog.has_other_pages %}
+      <ul class="pagination justify-content-center">
+        <!-- Previous button -->
+        {% if blog.has_previous %}
+          <li class="page-item">
+            <a href="?page={{blog.previous_page_number}}" class="page-link" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+        {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+        {% endif %}
+
+        <!-- Page numbers -->
+        {% for i in blog.paginator.page_range %}
+          {% if blog.number == i %}
+            <li class="page-item active">
+              <a class="page-link">{{ i }}</a>
+            </li>
+          {% else %}
+            <li class="page-item">
+              <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+
+        <!-- Next button -->
+        {% if blog.has_next %}
+          <li class="page-item">
+            <a href="?page={{ blog.next_page_number }}" class="page-link" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,209 @@
+{% extends 'base.html' %} {% load static %} {% block content %} {% load i18n %}
+<div id="carouselExampleControls" class="carousel slide " data-bs-ride="carousel">
+    <div class="carousel-inner carousel-nav">
+        <div class="carousel-item carousel-item-nav active " >
+            <img src="{% static 'img/slide1.png' %}" class="d-block w-100 img-fluid" alt="...">
+
+        </div>
+        <div class="carousel-item carousel-item-nav " >
+            <img src="{% static 'img/slide2.png' %}" class="d-block w-100 img-fluid" alt="...">
+        </div>
+        <div class="carousel-item carousel-item-nav">
+            <img src="{% static 'img/slide3.png' %}" class="d-block w-100 img-fluid" alt="...">
+        </div>
+    </div>
+    <div class="title row justify-content-center text-center" data-aos="fade-up" data-aos-delay="100">
+        <div class="col-xl-6 col-lg-8 animation">
+            <h2>{% trans "Истражи ги убавините на Гевгелија" %}<span>.</span></h2>
+            <p>{% trans "Се што ти треба за Гевгелија на едно место" %}</p>
+        </div>
+    </div>
+    <div class="wtf container-fluid d-flex justify-content-center">
+        <div class="inner">
+            <div class="row ms-3 me-3 mt-3 bg-white">
+                <form action="{% url 'search' %}" class="d-flex p-0 flex-wrap justify-content-between align-items-center">
+                    <div class="col-12 col-sm-3 mb-2">
+                        <input type="text" placeholder="{% trans 'Пребарувај...' %}" class="form-control form-control-sm" name="keywords" value="{{ values.keywords }}">
+                    </div>
+                    <div class="col-12 col-sm-3 mb-2">
+                        <select class="form-control" name="Локација" id="location" required>
+                            <option value="" disabled selected>{% trans "Локација" %}</option>
+                            {% for key, value in location_choices.items %}
+                            <option value="{{ key }}"
+                             {% if key == values.Локација %}
+                                selected
+                                {% endif %}
+                            >{{ value }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-12 col-sm-3 mb-2">
+                        <select class="form-control" name="Категории">
+                            <option value="" disabled selected>{% trans "Категории" %}</option>
+                            {% for key, value in category_choices.items %}
+                            <option value="{{ key }}"
+                            {% if key == values.Локација %}
+                               selected
+                               {% endif %}
+                           >{{ value }} </option>
+                           {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-12 col-sm-3 mb-2 d-flex justify-content-sm-end">
+                        <button type="submit" class="btn btn-primary prebaruvaj">{% trans "Пребарувај" %}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<div class="container-fluid ch-categories mt-5 animation">
+    <div class="container">
+        <div class="row">
+
+        {% if apartments or buildings or coffee or hotels or restaurants %}
+
+            {% if apartments %}
+                {% for apartments_page in apartments %}
+            <div class="ch-col col-lg-4 mb-lg-0 mb-4 " >
+                <div class="ch-overlay d-flex flex-column justify-content-end align-items-center" style="background-image: url({{apartments_page.photo_main.url}}); background-size: cover;">
+
+                </div>
+                <div class="content">
+                    <h1>{{ apartments_page.title }}</h1>
+                    <i class="bi bi-geo-alt"></i>
+                    <p class="adress">{{ apartments_page.adress }}</p>
+                    <p class="desc">{{ apartments_page.small_description }}</p>
+                    <button type="button" class="btn ch-button">{% trans "ЛОКАЦИЈА" %}</button>
+                    <button type="button" class="btn ch-button2">{% trans "ПОВЕЌЕ" %}</button>
+
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+
+            {% if buildings %}
+                {% for buildings_page in buildings %}
+            <div class="ch-col col-lg-4 mb-lg-0 mb-4 " >
+                <div class="ch-overlay d-flex flex-column justify-content-end align-items-center" style="background-image: url({{buildings_page.photo_main.url}}); background-size: cover;">
+                </div>
+                <div class="content">
+                    <h1>{{ buildings_page.title }}</h1>
+                    <i class="bi bi-geo-alt"></i>
+                    <p class="adress">{{ buildings_page.adress }}</p>
+                    <p class="desc">{{ buildings_page.small_description }}</p>
+                    <button type="button" class="btn ch-button">{% trans "ЛОКАЦИЈА" %}</button>
+                    <button type="button" class="btn ch-button2">{% trans "ПОВЕЌЕ" %}</button>
+                </div>
+            </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if coffee %}
+                {% for coffee_page in coffee %}
+            <div class="ch-col col-lg-4 mb-lg-0 mb-4 " >
+                <div class="ch-overlay d-flex flex-column justify-content-end align-items-center" style="background-image: url({{coffee_page.photo_main.url}}); background-size: cover;">
+
+                </div>
+                <div class="content">
+                    <h1>{{ coffee_page.title }}</h1>
+                    <i class="bi bi-geo-alt"></i>
+                    <p class="adress">{{ coffee_page.adress }}</p>
+                    <p class="desc">{{ coffee_page.small_description }}</p>
+                    <button type="button" class="btn ch-button">{% trans "МЕНИ" %}</button>
+                    <button type="button" class="btn ch-button2">{% trans "ПОВЕЌЕ" %}</button>
+
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            {% if hotels %}
+                {% for hotels_page in hotels %}
+            <div class="ch-col col-lg-4 mb-lg-0 mb-4 " >
+                <div class="ch-overlay d-flex flex-column justify-content-end align-items-center" style="background-image: url({{hotels_page.photo_main.url}}); background-size: cover;">
+
+                </div>
+                <div class="content">
+                    <h1>{{ hotels_page.title }}</h1>
+                    <i class="bi bi-geo-alt"></i>
+                    <p class="adress">{{ hotels_page.adress }}</p>
+                    <p class="desc">{{ hotels_page.small_description }}</p>
+                    <button type="button" class="btn ch-button">{% trans "ЛОКАЦИЈА" %}</button>
+                    <button type="button" class="btn ch-button2">{% trans "ПОВЕЌЕ" %}</button>
+
+                </div>
+            </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if restaurants %}
+                {% for restaurants_page in restaurants %}
+            <div class="ch-col col-lg-4 mb-lg-0 mb-4 " >
+                <div class="ch-overlay d-flex flex-column justify-content-end align-items-center" style="background-image: url({{restaurants_page.photo_main.url}}); background-size: cover;">
+
+                </div>
+                <div class="content">
+                    <h1>{{ restaurants_page.title }}</h1>
+                    <i class="bi bi-geo-alt"></i>
+                    <p class="adress">{{ restaurants_page.adress }}</p>
+                    <p class="desc">{{ restaurants_page.small_description }}</p>
+                    <button type="button" class="btn ch-button">{% trans "МЕНИ" %}</button>
+                    <button type="button" class="btn ch-button2">{% trans "ПОВЕЌЕ" %}</button>
+
+                </div>
+            </div>
+                {% endfor %}
+            {% endif %}
+            {% else %}
+            <p>No listings</p>
+        {% endif %}
+        </div>
+        </div>
+</div> 
+
+
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    {% if blog.has_other_pages %}
+                        <ul class="pagination">
+                           {% if blog.has_previous %}
+                                <li class="page-item">
+                                    <a href="?page={{blog.previous_page_number}}" class="page-link">&laquo;</a>
+                                </li>
+                           {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link">&laquo;</a>
+                                </li>
+                           {% endif %}
+                           {% for i in blog.paginator.page_range %}
+                                {% if blog.number == i %}
+                                    <li class="page-item active">
+                                        <a class="page-link">{{i}}</a>
+                                    </li>
+                                {% else %}
+                                <li class="page-item">
+                                    <a href="?page={{i}}" class="page-link">{{i}}</a>
+                                </li>
+                                {% endif %}
+                           {% endfor %}
+                           {% if blog.has_next %}
+                                <li class="page-item">
+                                    <a href="?page={{blog.next_page_number}}" class="page-link">&raquo;</a>
+                                </li>
+                           {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link">&raquo;</a>
+                                </li>
+                           {% endif %}
+                        </ul>  
+                        {% endif %}
+                        </div>
+                  
+            </div>
+
+{% endblock %}

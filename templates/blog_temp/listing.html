@@ -1,0 +1,79 @@
+{% extends 'base.html' %} {% load static %} {% load i18n %} 
+{% block title %} | Блог {% endblock %}
+{% block content %}
+<div class="bcg">
+    <img src="{% static 'img/slide1.png' %}">
+    <div class="title-ctg row justify-content-center text-center" data-aos="fade-up" data-aos-delay="100">
+        <div class="col-xl-6 col-lg-8 animation">
+            <h2>{{ listing.title }}<span>.</span></h2>
+            <p>{{ listing.category }}</p>
+        </div>
+    </div>
+</div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <section id="blog-details" class="blog-details section">
+            <div class="container">
+              <article class="article">
+                <div class="post-img">
+                  <img src="{{ listing.photo_main.url }}" alt="" class="img-fluid">
+                </div>
+                <div class="meta-top">
+                  <ul>
+                    <li class="d-flex align-items-center pb-3"><i class="bi bi-person"></i> <a href="blog-details.html">{{ listing.author.name }}</a></li>
+                    <li class="d-flex align-items-center pb-3"><i class="bi bi-clock"></i> <a href="blog-details.html"><time datetime="2020-01-01">{{ listing.list_date }}</time></a></li>
+                  </ul>
+                </div>
+                  <p>{{ listing.description }}</p>
+              </article>
+            </div>
+          </section>
+        </div>
+
+        <div class="col-lg-4 sidebar">
+
+          <div class="widgets-container">
+            <div class="blog-author-widget widget-item">
+              <div class="d-flex flex-column align-items-center">
+                <img src="{{ listing.author.photo.url }}" class="rounded-circle flex-shrink-0" alt="">
+                <h4>{{ listing.author.name }}</h4>
+        
+
+              </div>
+            </div>
+            <div class="search-widget widget-item">
+              <h3 class="widget-title"></h3>
+              <form action="{% url 'search2' %}">
+                <input type="text" placeholder="{% trans 'Пребарувај' %}..." name="title" value="{{ values.keywords }}">
+                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+              </form>
+            </form>
+            </div>
+            
+            <div class="recent-posts-widget widget-item">
+
+            
+              {% if blog %}
+               {% for blog_page in blog %}
+              <div class="post-item">
+                <img src="{{ blog_page.photo_main.url }}" alt="" class="flex-shrink-0" style="height: 120px; width: 100px;">
+                <div>
+                  <h4><a href="{% url 'listing' blog_page.id %}">{{ blog_page.title }}</a></h4>
+                  <time> {{ blog_page.list_date}} </time>
+                  <p style="font-weight: lighter; font-size: 13px;">{{ blog_page.description|truncatewords:15 }}</p>
+
+                </div>
+              </div>
+                {% endfor %}
+              {% endif %}
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+{% endblock %}

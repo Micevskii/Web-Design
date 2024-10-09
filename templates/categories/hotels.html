@@ -1,0 +1,42 @@
+{% extends 'base.html' %} {% load static %} {% load i18n %}
+{% block title %} | Хотели {% endblock %}
+{% block content %}
+<div class="bcg">
+    <img src="{% static 'img/slide1.png' %}">
+    <div class="title-ctg row justify-content-center text-center" data-aos="fade-up" data-aos-delay="100">
+        <div class="col-xl-6 col-lg-8 animation">
+            <h2>{% trans "Хотели" %}<span>.</span></h2>
+            <p>{% trans "Одберете го својот хотел" %}</p>
+        </div>
+    </div>
+</div>
+<div class="container-fluid ch-categories mt-5 animation">
+    <div class="container">
+        <div class="row">
+            {% if hotels %}
+                {% for hotels_page in hotels %}
+            <div class="ch-col col-lg-4 mb-lg-0 mb-4 " >
+                <div class="ch-overlay d-flex flex-column justify-content-end align-items-center" style="background-image: url({{hotels_page.photo_main.url}}); background-size: cover;">
+
+                </div>
+                <div class="content">
+                    <h1>{{ hotels_page.title }}</h1>
+                    <i class="bi bi-geo-alt"></i>
+                    <p class="adress">{{ hotels_page.adress }}</p>
+                    <p class="desc">{{ hotels_page.small_description }}</p>
+                    <button type="button" class="btn ch-button">{% trans "ЛОКАЦИЈА" %}</button>
+                    <button type="button" class="btn ch-button2">{% trans "ПОВЕЌЕ" %}</button>
+
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="col md-12">
+                <p>{% trans "Нема објави" %}</p>
+            </div>
+        {% endif %}
+        </div>
+        </div>
+        </div>
+        
+{% endblock %} 

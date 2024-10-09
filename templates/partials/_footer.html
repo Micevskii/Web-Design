@@ -1,0 +1,25 @@
+{% load static %}{% load i18n %}
+<footer id="footer" class="footer dark-background ">
+    <div class="container-fluid newsletter">
+        <h1>{% trans "Новости" %}</h1>
+        <p>{% trans "Претплатете се на нашиот весник за да ги добивате сите новости за нас и градот." %}</p>
+        <div>
+            <form method="post" action="{% url 'subscribe' %}" class="d-flex">
+                {% csrf_token %}
+                <input class="footer-input form-control form-control-sm" type="email" name="email" placeholder="{% trans 'Внеси е-пошта' %}" required>
+                <button type="submit">{% trans "Претплати се" %}</button>
+            </form>
+        </div>
+    </div>
+
+        <div class="container ">
+            <div class="container">
+                <div class="copyright">
+                    <span>{% trans "© 2024 Авторско право" %}</span> <strong class="px-1 sitename">{% trans "КОМПЛЕКС" %}.</strong> <span>{% trans "Сите права се задржани" %}</span>
+                </div>
+                <div class="credits">
+                    {% trans "Дизајнирано од " %}<a href="https://www.instagram.com/micevskifilipp/">{% trans " Филип Мицевски"%}</a>
+                </div>
+            </div>
+        </div>
+    </footer>

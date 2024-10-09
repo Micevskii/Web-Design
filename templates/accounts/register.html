@@ -1,0 +1,57 @@
+{% extends 'base2.html' %} {% load i18n %}
+{% load static %}
+{% block content %}
+
+<diiv id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'img/slide1.png' %}" class="d-block w-100 img-fluid" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'img/slide2.png' %}" class="d-block w-100 img-fluid" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'img/slide3.png' %}" class="d-block w-100 img-fluid" alt="...">
+      </div>
+    </div>
+
+  <div class="register-box mt-5">
+  
+    <h3 class="text-center mb-4">{% trans "Регистрирај се" %}</h3> 
+     {% include 'partials/_alerts.html' %}
+    <form method="POST" action="{% url 'register' %}" >
+        {% csrf_token %}
+      <div class="form-group">
+        <input type="text" class="form-control" name="firstname" placeholder="{% trans 'Име' %}" required>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" name="lastname" placeholder=" {% trans 'Презиме' %}" required>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" name="username" placeholder="{% trans 'Корисничко име' %}" required>
+      </div>
+      <div class="form-group">
+        <input type="email" class="form-control" name="email" placeholder="{% trans 'Внеси е-пошта' %}" required>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" name="password" placeholder="{% trans 'Лозинка' %}" required>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" name="password2" id="password2" placeholder="{% trans 'Потврди ja лозинката' %}" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" style="
+      width: 100%;
+      height: 50px;
+      ">{% trans 'Регистрирај се' %}</button>
+    </form>
+
+    <!-- Sign In Section -->
+    <div class="text-center mt-3 reg">
+      <p>{% trans 'Веќе имаш профил?' %}</p>
+      <a href="{% url 'login' %}" class="btn btn-block">{% trans 'Најави се' %}</a>
+    </div>
+  </div>
+
+</diiv>
+
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends 'base.html' %} {% load static %} {% block content %} {% load i18n %} 
+<div id="carouselExampleControls" class="carousel slide " data-bs-ride="carousel">
+    <div class="carousel-inner carousel-nav">
+        <div class="carousel-item carousel-item-nav active " >
+            <img src="{% static 'img/slide1.png' %}" class="d-block w-100 img-fluid" alt="...">
+
+        </div>
+        <div class="carousel-item carousel-item-nav " >
+            <img src="{% static 'img/slide2.png' %}" class="d-block w-100 img-fluid" alt="...">
+        </div>
+        <div class="carousel-item carousel-item-nav">
+            <img src="{% static 'img/slide3.png' %}" class="d-block w-100 img-fluid" alt="...">
+        </div>
+    </div>
+    <div class="title row justify-content-center text-center" data-aos="fade-up" data-aos-delay="100">
+        <div class="col-xl-6 col-lg-8 animation">
+            <h2>{% trans "Истражи ги убавините на Гевгелија" %}<span>.</span></h2>
+            <p>{% trans "Се што ти треба за Гевгелија на едно место" %}</p>
+        </div>
+    </div>
+    <div class="wtf container-fluid d-flex justify-content-center">
+        <div class="inner">
+            <div class="row ms-3 me-3 mt-3 bg-white">
+                <form action="{% url 'search2' %}" class="d-flex p-0 flex-wrap justify-content-between align-items-center">
+                    <div class="col-12 col-sm-9 mb-2">
+                        <input type="text" placeholder="{% trans 'Пребарувај' %}..." class="form-control form-control-sm" name="title" value="{{ values.keywords }}">
+                    </div>
+                
+                    <div class="col-12 col-sm-3 mb-2 d-flex justify-content-sm-end">
+                        <button type="submit" title="Search" class="btn btn-primary prebaruvaj">{% trans "Пребарувај" %}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<div class="container-fluid blog-categories mt-5">
+    <div class="container">
+        <div class="row">
+            {% if blog %}
+                {% for blog_page in blog %}
+                <div class="blog-col col-lg-4 mb-lg-0 mb-4  " >
+                    <div class="blog-overlay d-flex flex-column justify-content-end align-items-center" style="background-image: url({{blog_page.photo_main.url}}); background-size: cover; overflow:hidden">
+                        <div class="overlayb">  <a href="{% url 'listing' blog_page.id %}" class="link-overlay"></a>
+                            <div class="date">
+                            <h6>{{ blog_page.list_date|date:"M" }}</h6>
+                            <h1>{{ blog_page.list_date.day }}</h1>
+                            </div>
+                        </div>
+    
+                    </div>
+                    <div class="blog-content">
+                        <a href="{% url 'listing' blog_page.id %}"></a>
+                        <p class="adress">{{ blog_page.adress }}</p>
+                        <h1>{{ blog_page.title }}</h1>
+                    </div>
+                </div>    
+                {% endfor %}
+    
+            {% else %}
+                <div class="col md-12">
+                    <p>{% trans "Нема објави" %}</p>
+                </div>
+            {% endif %}
+        </div>
+        </div>
+</div> 
+
+
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    {% if blog.has_other_pages %}
+                        <ul class="pagination">
+                           {% if blog.has_previous %}
+                                <li class="page-item">
+                                    <a href="?page={{blog.previous_page_number}}" class="page-link">&laquo;</a>
+                                </li>
+                           {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link">&laquo;</a>
+                                </li>
+                           {% endif %}
+                           {% for i in blog.paginator.page_range %}
+                                {% if blog.number == i %}
+                                    <li class="page-item active">
+                                        <a class="page-link">{{i}}</a>
+                                    </li>
+                                {% else %}
+                                <li class="page-item">
+                                    <a href="?page={{i}}" class="page-link">{{i}}</a>
+                                </li>
+                                {% endif %}
+                           {% endfor %}
+                           {% if blog.has_next %}
+                                <li class="page-item">
+                                    <a href="?page={{blog.next_page_number}}" class="page-link">&raquo;</a>
+                                </li>
+                           {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link">&raquo;</a>
+                                </li>
+                           {% endif %}
+                        </ul>  
+                        {% endif %}
+                        </div>
+                  
+            </div>
+
+{% endblock %}

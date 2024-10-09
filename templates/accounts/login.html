@@ -1,0 +1,45 @@
+{% extends 'base2.html' %}{% load static %} {% block content %} {% load i18n %}
+<div id="carouselExampleControls" class="carousel slide " data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'img/slide1.png' %}" class="d-block w-100 img-fluid" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'img/slide2.png' %}" class="d-block w-100 img-fluid" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'img/slide3.png' %}" class="d-block w-100 img-fluid" alt="...">
+      </div>
+      </div>
+
+  <div class="login-box animation">
+    <h3 class="text-center mb-4">{% trans "Најави се" %}</h3>
+    {% include 'partials/_alerts.html' %}
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+          <input type="text" class="form-control" name="username" placeholder="{% trans 'Корисничко име' %}" required>
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" name="password" placeholder="{% trans 'Лозинка' %}" required>
+        </div>
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="remember">
+        <label class="form-check-label" for="remember">{% trans "Запамти ме" %}</label>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" style="
+      width: 100%;
+      height: 50px;
+      ">{% trans "Најави се" %}</button>
+    </form>
+
+    <!-- Sign Up Section -->
+    <div class="text-center mt-3 reg">
+      <p>{% trans "Немаш" %} {% trans "профил" %}?</p>
+      <a href="{% url 'register' %}" class="btn btn-block">{% trans "Регистрирај се" %}</a>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
